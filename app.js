@@ -33,7 +33,7 @@ app.get('/api/access/:access_token/:user_token', (req, res) => {
             res.send(data);
         })
         .then((admin_result) => {
-            User.findOneAndUpdate({toekn: req.params.user_token}, {toekn: null})
+            User.findOneAndUpdate({token: req.params.user_token}, {token: null})
                 .orFail((error) => {
                     const data = {
                         error: 820,
@@ -50,7 +50,7 @@ app.get('/api/access/:access_token/:user_token', (req, res) => {
         
                     res.send(data);
                 })
-                .catch((error) => res.send(error));
+                .catch((error) => {});
         })
-        .catch((error) => res.send(error));
+        .catch((error) => {});
 });
