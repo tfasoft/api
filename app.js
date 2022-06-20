@@ -23,7 +23,7 @@ app.set('json spaces', 2);
 app.get('/api/access/:access_token/:user_token', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
-    Admin.where("access_token").equals(req.params.access_token)
+    Admin.findOne({access_token: req.params.access_token})
         .orFail((error) => {
             const data = {
                 error: 290,
@@ -33,7 +33,7 @@ app.get('/api/access/:access_token/:user_token', (req, res) => {
             res.send(data);
         })
         .then((admin_result) => {
-            User.where("token").equals(req.params.user_token)
+            User.findOneAndUpdate({toekn: req.params.user_token}, {toekn: null})
                 .orFail((error) => {
                     const data = {
                         error: 820,
