@@ -49,6 +49,8 @@ app.get('/api/access/:access_token/:user_token', (req, res) => {
                     };
         
                     res.send(data);
-                });
-        });
+                })
+                .catch((error) => res.send(error));
+        })
+        .catch((error) => res.send(error));
 });
