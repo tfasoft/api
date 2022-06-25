@@ -24,33 +24,32 @@ app.get('/api/access/:access_token/:user_token', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
     Admin.findOne({access_token: req.params.access_token})
-        .orFail((error) => {
-            const data = {
-                error: 290,
-                message: "Admin access token is not valid"
-            };
-
-            res.send(data);
-        })
         .then((admin_result) => {
-            User.findOneAndUpdate({token: req.params.user_token}, {token: null})
-                .orFail((error) => {
-                    const data = {
-                        error: 820,
-                        message: "User authentication token is not valid"
-                    };
-        
-                    res.send(data);
-                })
-                .then((user_result) => {
-                    const data = {
-                        error: 800,
-                        user: user_result
-                    };
-        
-                    res.send(data);
-                })
-                .catch((error) => {});
+            if (admin_result === null) {
+                res.status(401);
+                res.send({
+                    error: 290,
+                    message: "Admin access token is not valid"
+                });
+            } else {
+                User.findOneAndUpdate({token: req.params.user_token}, {token: null})
+                    .then((user_result) => {
+                        if (user_result === null) {
+                            res.status(200);
+                            res.send({
+                                error: 820,
+                                message: "User authentication token is not valid"
+                            });
+                        } else {
+                            res.status(200);
+                            res.send({
+                                error: 800,
+                                user: user_result
+                            });
+                        }
+                    })
+                    .catch((error) => {});
+            }
         })
         .catch((error) => {});
 });
