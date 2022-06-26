@@ -43,7 +43,7 @@ app.get('/api/access/:access_token/:user_token', (req, res) => {
                         } else {
                             res.status(200);
                             res.send({
-                                error: 800,
+                                success: 800,
                                 user: user_result
                             });
                         }
