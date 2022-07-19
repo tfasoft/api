@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = requre('cors');
 
 const Admin = require('./modules/admin');
 const User = require('./modules/user');
@@ -18,6 +19,8 @@ mongoose.connect(mdb)
     .catch((error) => console.log(error));
 
 app.use(express.urlencoded({extended: true}));
+app.use(cors());
+
 app.set('json spaces', 2);
 
 app.get('/api/access/:access_token/:user_token', (req, res) => {
@@ -28,22 +31,19 @@ app.get('/api/access/:access_token/:user_token', (req, res) => {
             if (admin_result === null) {
                 res.status(401);
                 res.send({
-                    error: 290,
                     message: "Admin access token is not valid"
                 });
             } else {
                 User.findOneAndUpdate({token: req.params.user_token}, {token: null})
                     .then((user_result) => {
                         if (user_result === null) {
-                            res.status(200);
+                            res.status(401);
                             res.send({
-                                error: 820,
                                 message: "User authentication token is not valid"
                             });
                         } else {
                             res.status(200);
                             res.send({
-                                success: 800,
                                 user: user_result
                             });
                         }
