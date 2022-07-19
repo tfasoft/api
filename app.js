@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = requre('cors');
 
-const Admin = require('./modules/admin');
-const User = require('./modules/user');
+const Admin = require('./app/models/admin');
+const User = require('./app/models/user');
 
 require('dotenv').config();
 const env = process.env;
