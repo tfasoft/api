@@ -8,7 +8,7 @@ const login = (req, res) => {
 
     const newToken = randomstring.generate({length: 25, charset: 'alphabetic'});
 
-    User.findOneAndUpdate({ tid: tid }, { token: newToken })
+    User.findOneAndUpdate({ "tid": `${tid}` }, { "token": newToken })
         .then((result) => {
             if (result === null) {
                 const data = {
@@ -35,7 +35,43 @@ const login = (req, res) => {
 const regsiter = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
-    res.send('Login');
+    const tid = req.body.tid;
+
+    User.findOne({ "tid": `${tid}` })
+        .then((result) => {
+            if (result === null) {
+                const userData = {
+                    "tid": `${tid}`,
+                    "token": randomstring.generate({length: 25, charset: 'alphabetic'})
+                }
+
+                const user = new User(userData);
+                user.save()
+                    .then((user) => {
+                        const data = {
+                            message: "You are now registered!"
+                        }
+                        
+                        res.status(200);
+                        res.send(data);
+                    })
+                    .catch((error) => {
+                        res.status(401);
+                        res.send(error);
+                    });
+            } else {
+                const data = {
+                    message: "You are now a user and don't need a new registration."
+                }
+                
+                res.status(200);
+                res.send(data);
+            }
+        })
+        .catch((error) => {
+            res.status(500);
+            res.send(error);
+        });
 }
 
 const info = (req, res) => {
