@@ -4,22 +4,23 @@ const User = require('../models/user');
 const login = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
-    const tid = req.body;
-    console.log(tid);
+    const tid = req.body.tid;
 
     const newToken = randomstring.generate({length: 25, charset: 'alphabetic'});
 
-    User.findOneAndUpdate({ "tid": `${tid}` }, { "token": newToken })
+    User.findOneAndUpdate({ tid }, { token: newToken })
         .then((result) => {
             if (result === null) {
                 const data = {
+                    code: 1,
                     message: "You are not registered.\nPress register button to register."
                 }
 
-                res.status(401);
+                res.status(200);
                 res.send(data);
             } else {
                 const data = {
+                    code: 2,
                     token: newToken
                 }
                 
@@ -37,14 +38,13 @@ const regsiter = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
     const tid = req.body.tid;
-    console.log(tid);
 
-    User.findOne({ "tid": `${tid}` })
+    User.findOne({ tid })
         .then((result) => {
             if (result === null) {
                 const userData = {
-                    "tid": `${tid}`,
-                    "token": randomstring.generate({length: 25, charset: 'alphabetic'})
+                    tid,
+                    token: randomstring.generate({length: 25, charset: 'alphabetic'})
                 }
 
                 const user = new User(userData);
@@ -79,17 +79,16 @@ const regsiter = (req, res) => {
 const info = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
-    const tid = req.body.tid;
-    console.log(tid);
+    const data = req.body;
 
     let iData = `
 Your information is listed here:
-- name: ${tid}
-- tid: <code>${tid}</code>
+- name: ${data.name}
+- tid: <code>${data.tid}</code>
 - Registration status:
     `;
 
-    User.findOne({ "tid": `${tid}` })
+    User.findOne({ tid: data.tid })
         .then((result) => {
             if (result === null) {
                 iData += 'You are not registed yet.';
