@@ -1,9 +1,9 @@
-const app = require('express');
+const express = require('express');
 
 const controllers = require('../controllers/APIControllers');
 
-const routes = app.Router();
+const router = express.Router();
 
-routes.get('/access/:access_token/:user_token', controllers.AuthUser);
+router.get('/access/:access_token/:user_token', controllers.AuthUser);
 
-module.exports = routes;
+module.exports = router;
