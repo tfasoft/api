@@ -4,7 +4,8 @@ const User = require('../models/user');
 const login = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
-    const tid = req.body.tid;
+    const tid = req.body;
+    console.log(tid);
 
     const newToken = randomstring.generate({length: 25, charset: 'alphabetic'});
 
@@ -36,6 +37,7 @@ const regsiter = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
     const tid = req.body.tid;
+    console.log(tid);
 
     User.findOne({ "tid": `${tid}` })
         .then((result) => {
@@ -77,7 +79,42 @@ const regsiter = (req, res) => {
 const info = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
-    res.send('Login');
+    const tid = req.body.tid;
+    console.log(tid);
+
+    let iData = `
+Your information is listed here:
+- name: ${tid}
+- tid: <code>${tid}</code>
+- Registration status:
+    `;
+
+    User.findOne({ "tid": `${tid}` })
+        .then((result) => {
+            if (result === null) {
+                iData += 'You are not registed yet.';
+
+                const data = {
+                    "data": iData,
+                }
+
+                res.status(200);
+                res.send(data);
+            } else {
+                iData += 'You are registered.';
+                
+                const data = {
+                    "data": iData,
+                }
+
+                res.status(200);
+                res.send(data);
+            }
+        })
+        .catch((error) => {
+            res.status(500);
+            res.send(error);
+        });
 }
 
 module.exports = {
