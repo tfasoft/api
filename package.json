@@ -1,6 +1,6 @@
 {
   "name": "telegram-factor-authentication-api",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "API service for authentication system with Telegram.",
   "main": "app.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BlackIQ/telegram-factor-authentication-api.git"
+    "url": "git+https://github.com/tfasoft/api.git"
   },
   "keywords": [
     "authentication",
@@ -22,9 +22,9 @@
   "author": "Amirhossein Mohammadi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/BlackIQ/telegram-factor-authentication-api/issues"
+    "url": "https://github.com/tfasoft/api/issues"
   },
-  "homepage": "https://github.com/BlackIQ/telegram-factor-authentication-api#readme",
+  "homepage": "https://github.com/tfasoft/api#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
