@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const APIRoutes = require('./routes/APIRoutes');
-const BotRoutes = require('./routes/BotRoutes');
+const UserRoutes = require('./routes/UserRoutes');
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(cors());
 
 app.set('json spaces', 2);
 
-app.use('/api', APIRoutes);
-app.use('/bot', BotRoutes);
+app.use('/api/auth', APIRoutes);
+app.use('/api/user', UserRoutes);
 
 module.exports = app;
