@@ -4,6 +4,6 @@ const controllers = require('../controllers/APIControllers');
 
 const router = express.Router();
 
-router.get('/access/:access_token/:user_token', controllers.AuthUser);
+router.post('/access', controllers.AuthUser);
 
 module.exports = router;
