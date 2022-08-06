@@ -45,6 +45,7 @@ const regsiter = (req, res) => {
             if (result === null) {
                 const userData = {
                     tid,
+                    mcode: randomstring.generate({length: 50, charset: 'alphabetic'}),
                     token: randomstring.generate({length: 25, charset: 'alphabetic'})
                 }
 
@@ -52,15 +53,21 @@ const regsiter = (req, res) => {
                 user.save()
                     .then((user) => {
                         const data = {
-                            message: "You are now registered!"
+                            message: "You are now registered!",
+                            user,
                         }
                         
                         res.status(200);
                         res.send(data);
                     })
                     .catch((error) => {
+                        const data = {
+                            message: "Sorry, you did not registered.",
+                            error,
+                        }
+
                         res.status(401);
-                        res.send(error);
+                        res.send(data);
                     });
             } else {
                 const data = {
