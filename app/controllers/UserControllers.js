@@ -93,7 +93,7 @@ const connect = (req, res) => {
         .then((result) => {
             if (result === null) {
                 const data = {
-                    message: "Sorry, you did not registered.",
+                    message: "Sorry, you are not registered.",
                 }
 
                 res.status(401);
