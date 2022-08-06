@@ -84,6 +84,36 @@ const regsiter = (req, res) => {
         });
 }
 
+const connect = (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+
+    const tid = req.body.tid;
+
+    User.findOne({ tid })
+        .then((result) => {
+            if (result === null) {
+                const data = {
+                    message: "Sorry, you did not registered.",
+                }
+
+                res.status(401);
+                res.send(data);
+            }
+            else {
+                const data = {
+                    mcode: result.mcode,
+                }
+                
+                res.status(200);
+                res.send(data);
+            }
+        })
+        .catch((error) => {
+            res.status(500);
+            res.send(error);
+        });
+}
+
 const info = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
@@ -128,4 +158,5 @@ module.exports = {
     login,
     regsiter,
     info,
+    connect,
 }
