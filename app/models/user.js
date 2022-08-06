@@ -5,11 +5,25 @@ const Schema = mongoose.Schema;
 const userModule = new Schema({
     tid: {
         type: String,
-        required: true
+        required: true,
     },
     token: {
         type: String,
-        required: true
+        required: true,
+    },
+    mcode: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: false,
+        default: "",
+    },
+    password: {
+        type: String,
+        required: false,
+        default: "",
     },
 }, {timestamps: true});
 
