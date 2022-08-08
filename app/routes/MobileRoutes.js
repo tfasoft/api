@@ -4,7 +4,8 @@ const controllers = require("../controllers/MobileControllers");
 
 const router = express.Router();
 
-router.post('/auth', controllers.auth);
+router.post('/login', controllers.login);
+router.post('/register', controllers.register);
 router.post('/connect', controllers.connect);
 
 module.exports = router;
