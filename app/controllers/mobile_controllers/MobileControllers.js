@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../../models/user');
 
 const login = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
