@@ -1,5 +1,5 @@
-const Admin = require('../models/admin');
-const User = require('../models/user');
+const Admin = require('../../models/admin');
+const User = require('../../models/user');
 
 const AuthUser = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
