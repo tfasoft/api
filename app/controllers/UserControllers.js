@@ -114,6 +114,32 @@ const connect = (req, res) => {
         });
 }
 
+const getUser = (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+
+    const uid = req.body.uid;
+
+    User.findById(uid)
+        .then((user) => {
+            if (user === null) {
+                const data = {
+                    message: "User is not found.",
+                }
+
+                res.status(401);
+                res.send(data);
+            }
+            else {
+                res.status(200);
+                res.send(user);
+            }
+        })
+        .catch((error) => {
+            res.status(500);
+            res.send(error);
+        });
+}
+
 const info = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
@@ -158,5 +184,6 @@ module.exports = {
     login,
     regsiter,
     info,
+    getUser,
     connect,
 }
