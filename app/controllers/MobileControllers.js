@@ -1,6 +1,6 @@
 const User = require('../models/user');
 
-const auth = (req, res) => {
+const login = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
     const body = req.body;
@@ -19,6 +19,23 @@ const auth = (req, res) => {
                 res.status(200);
                 res.send(result);
             }
+        })
+        .catch((error) => {
+            res.status(500);
+            res.send(error);
+        });
+}
+
+const register = (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+
+    const id = req.body.id;
+    const data = req.body.data;
+
+    User.findByIdAndUpdate(id, data)
+        .then((result) => {
+            res.status(200);
+            res.send(result);
         })
         .catch((error) => {
             res.status(500);
@@ -53,6 +70,7 @@ const connect = (req, res) => {
 }
 
 module.exports = {
-    auth,
+    login,
+    register,
     connect,
 }
