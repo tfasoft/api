@@ -8,6 +8,6 @@ router.post('/login', controllers.login);
 router.post('/register', controllers.regsiter);
 router.post('/info', controllers.info);
 router.post('/get', controllers.getUser);
-router.post('/connect', controllers.connect);
+router.post('/connect', controllers.connect)
 
 module.exports = router;
