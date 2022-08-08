@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const APIRoutes = require('./routes/APIRoutes');
+const AuthenticationRoutes = require('./routes/AuthenticationRoutes');
 const MobileRoutes = require('./routes/MobileRoutes');
 const UserRoutes = require('./routes/UserRoutes');
 
@@ -13,7 +13,7 @@ app.use(cors());
 
 app.set('json spaces', 2);
 
-app.use('/api/auth', APIRoutes);
+app.use('/api/auth', AuthenticationRoutes);
 app.use('/api/mobile', MobileRoutes);
 app.use('/api/user', UserRoutes);
 
