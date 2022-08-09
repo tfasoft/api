@@ -1,3 +1,7 @@
+/*
+    Route start: /api/dashboard
+*/
+
 const express = require("express");
 
 const AuthenticationRoutes = require('./AthenticationRoutes');

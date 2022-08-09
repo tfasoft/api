@@ -1,3 +1,8 @@
+/*
+    Routes name: Mobile Authentiocation Routes
+    Routes start: /api/mobile/mobile
+*/
+
 const express = require("express");
 const controllers = require("../../controllers/mobile_controllers/MobileControllers");
 

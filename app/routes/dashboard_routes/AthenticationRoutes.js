@@ -1,3 +1,8 @@
+/*
+    Routes name: Dashboard Authentiocation Routes
+    Routes start: /api/dashboard/auth
+*/
+
 const express = require('express');
 const controllers = require('../../controllers/dashboard_controllers/AuthenticationControllers');
 

@@ -1,3 +1,8 @@
+/*
+    Routes name: Blog Authentiocation Routes
+    Routes start: /api/blog/auth
+*/
+
 const express = require("express");
 const controllers = require("../../controllers/blog_controllers/AuthenticationControllers");
 

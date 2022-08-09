@@ -1,3 +1,8 @@
+/*
+    Routes name: Blogs Routes
+    Routes start: /api/blog/blogs
+*/
+
 const express = require("express");
 const controller = require("../../controllers/blog_controllers/BlogControllers");
 

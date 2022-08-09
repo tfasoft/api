@@ -1,3 +1,7 @@
+/*
+    Route start: /api/auth
+*/
+
 const express = require("express");
 
 const AuthenticationRoutes = require('./AuthenticationRoutes');

@@ -1,3 +1,7 @@
+/*
+    Route start: /api/user
+*/
+
 const express = require("express");
 
 const UserRoutes = require('./UserRoutes');
