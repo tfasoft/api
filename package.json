@@ -1,7 +1,7 @@
 {
-  "name": "telegram-factor-authentication-api",
-  "version": "2.0.0",
-  "description": "API service for authentication system with Telegram.",
+  "name": "tfasoft-api",
+  "version": "3.0.0",
+  "description": "TFASoft API service",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
