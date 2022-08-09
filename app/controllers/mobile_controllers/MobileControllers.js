@@ -29,7 +29,7 @@ const login = (req, res) => {
 const register = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
-    const id = req.body.id;
+    const id = req.body.uid;
     const data = req.body.data;
 
     User.findByIdAndUpdate(id, data)
