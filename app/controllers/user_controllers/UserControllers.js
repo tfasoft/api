@@ -189,7 +189,28 @@ const mcode_regenerate = (req, res) => {
     User.findByIdAndUpdate(uid, { mcode: newMcode })
         .then((result) => {
             const data = {
-                message: "M-Code regenerated."
+                message: "M-Code regenerated"
+            }
+            
+            res.status(200);
+            res.send(data);
+        })
+        .catch((error) => {
+            res.status(500);
+            res.send(error);
+        });
+}
+
+const updateUser = (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+
+    const uid = req.body.uid;
+    const data = req.body.data;
+
+    User.findByIdAndUpdate(uid, data)
+        .then((result) => {
+            const data = {
+                message: "Data updated successfully"
             }
             
             res.status(200);
@@ -208,4 +229,5 @@ module.exports = {
     getUser,
     connect,
     mcode_regenerate,
+    updateUser,
 }
