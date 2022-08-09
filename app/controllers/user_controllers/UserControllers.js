@@ -1,3 +1,8 @@
+/*
+    Controllers: User
+    Controller: User
+*/
+
 const User = require('../../models/user');
 
 const randomstring = require("randomstring");

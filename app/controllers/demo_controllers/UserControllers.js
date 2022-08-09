@@ -1,3 +1,8 @@
+/*
+    Controllers: Demo
+    Controller: User
+*/
+
 const Duser = require('../../models/duser');
 
 const info = (req, res) => {

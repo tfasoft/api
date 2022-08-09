@@ -1,3 +1,8 @@
+/*
+    Controllers: Authentication
+    Controller: Authentication
+*/
+
 const Admin = require('../../models/admin');
 const User = require('../../models/user');
 

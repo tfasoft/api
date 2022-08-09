@@ -1,3 +1,8 @@
+/*
+    Controllers: Blog
+    Controller: Authentication
+*/
+
 const Author = require("../../models/author");
 
 const login = (req, res) => {

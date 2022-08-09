@@ -1,3 +1,8 @@
+/*
+    Controllers: Blog
+    Controller: Blog
+*/
+
 const Blog = require("../../models/blog");
 
 const all = (req, res) => {

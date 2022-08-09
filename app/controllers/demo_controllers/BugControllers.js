@@ -1,3 +1,8 @@
+/*
+    Controllers: Demo
+    Controller: Bug
+*/
+
 const Bug = require("../../models/bug")
 
 const newBug = (req, res) => {

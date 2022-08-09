@@ -1,3 +1,8 @@
+/*
+    Controllers: Dashboard
+    Controller: Authentication
+*/
+
 const Admin = require("../../models/admin");
 const randomstring = require("randomstring");
 

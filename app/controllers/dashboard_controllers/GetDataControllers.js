@@ -1,3 +1,8 @@
+/*
+    Controllers: Dashboard
+    Controller: Get Data
+*/
+
 const Admin = require("../../models/admin");
 
 // Get admin

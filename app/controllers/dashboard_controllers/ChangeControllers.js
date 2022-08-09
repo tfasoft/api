@@ -1,3 +1,8 @@
+/*
+    Controllers: Dashboard
+    Controller: Change
+*/
+
 const Admin = require("../../models/admin");
 
 // Change name
