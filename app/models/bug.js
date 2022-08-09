@@ -1,5 +1,8 @@
-const mongoose = require('mongoose');
+/*
+    Bug Model
+*/
 
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const bugModel = new Schema({

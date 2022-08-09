@@ -1,5 +1,8 @@
-const mongoose = require('mongoose');
+/*
+    Admin Model
+*/
 
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const adminModule = new Schema({

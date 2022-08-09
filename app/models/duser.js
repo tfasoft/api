@@ -1,5 +1,8 @@
-const mongoose = require('mongoose');
+/*
+    Demo User (Duser) Model
+*/
 
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const duserModule = new Schema({

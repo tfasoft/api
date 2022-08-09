@@ -1,5 +1,8 @@
-const mongoose = require("mongoose");
+/*
+    Blog Model
+*/
 
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const blogModel = new Schema({
