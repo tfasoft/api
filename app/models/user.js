@@ -15,6 +15,11 @@ const userModule = new Schema({
         type: String,
         required: true,
     },
+    name: {
+        type: String,
+        required: false,
+        default: "",
+    },
     email: {
         type: String,
         required: false,
