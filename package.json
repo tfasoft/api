@@ -31,6 +31,6 @@
     "express": "^4.18.1",
     "mongoose": "^6.4.0",
     "randomstring": "^1.2.2",
-    "tfa-node-sdk": "^1.5.2"
+    "tfa-node-sdk": "^1.6.2"
   }
 }
