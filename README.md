@@ -1,18 +1,7 @@
-# Telegram Factor Authentication - API
+# TFASoft API
 
-Telegram Factor Authentication server.
+TFASoft API is the main part of our service. Every action is handles here.
 
-## How does it works?
+## API documentation
 
-The API service gets 2 params.
-
-- Admin access token
-- User generated token
-
-When you or SDK pass these params, if they be ok, you get the user data and 200 http code. In the other hand, if not, you will get 401 and you should check body response for error that check what is the error.
-
-You don't need use this API manualy. Use our SDKs to make fast, clean and betther apps.
-
-## SDKs
-
-Our SDKs are availiable for Python and Node.
+We have no API doc yet. But we are creating one.
