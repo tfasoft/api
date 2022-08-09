@@ -180,10 +180,32 @@ Your information is listed here:
         });
 }
 
+const mcode_regenerate = (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+
+    const uid = req.body.uid;
+    const newMcode = randomstring.generate({length: 50, charset: 'alphabetic'});
+
+    User.findByIdAndUpdate(uid, { mcode: newMcode })
+        .then((result) => {
+            const data = {
+                message: "M-Code regenerated."
+            }
+            
+            res.status(200);
+            res.send(data);
+        })
+        .catch((error) => {
+            res.status(500);
+            res.send(error);
+        });
+}
+
 module.exports = {
     login,
     regsiter,
     info,
     getUser,
     connect,
+    mcode_regenerate,
 }
