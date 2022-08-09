@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/login', controllers.login);
 router.post('/register', controllers.regsiter);
 router.post('/info', controllers.info);
-router.put('/update', controllers.updateeUser);
+router.put('/update', controllers.updateUser);
 router.post('/get', controllers.getUser);
 router.post('/connect', controllers.connect);
 router.post('/mcode/regenerate', controllers.mcode_regenerate);
