@@ -7,6 +7,14 @@ const User = require('../../models/user');
 
 const randomstring = require("randomstring");
 
+const validateEmail = (email) => {
+    return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+}
+
 const login = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
@@ -52,6 +60,21 @@ const regsiter = (req, res) => {
                     tid,
                     mcode: randomstring.generate({length: 50, charset: 'alphabetic'}),
                     token: randomstring.generate({length: 25, charset: 'alphabetic'})
+                }
+
+                /**
+                 * Validating email address to avoid entering invalid email address
+                 * 
+                 * @param {string} email
+                 * @returns {string|null}
+                 */
+                if (validateEmail(req.body.email) === null) {
+                    const data = {
+                        message: "Invalid email address."
+                    }
+
+                    res.status(400);
+                    res.send(data);
                 }
 
                 const user = new User(userData);
