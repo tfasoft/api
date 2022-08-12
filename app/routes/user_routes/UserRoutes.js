@@ -9,7 +9,7 @@ const controllers = require('../../controllers/user_controllers/UserControllers'
 const router = express.Router();
 
 router.post('/login', controllers.login);
-router.post('/register', controllers.regsiter);
+router.post('/register', controllers.register);
 router.post('/info', controllers.info);
 router.put('/update', controllers.updateUser);
 router.post('/get', controllers.getUser);
