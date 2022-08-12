@@ -48,7 +48,7 @@ const login = (req, res) => {
         });
 }
 
-const regsiter = (req, res) => {
+const register = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
 
     const tid = req.body.tid;
@@ -252,7 +252,7 @@ const updateUser = (req, res) => {
 
 module.exports = {
     login,
-    regsiter,
+    register,
     info,
     getUser,
     connect,
