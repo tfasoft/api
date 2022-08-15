@@ -14,7 +14,6 @@ mongoose.connect(mdb)
     .then((connection) => {
         const port = env.PORT; // Use port in .env
 
-        console.log(`Connected. Running in ${port}`); // Print connected
-        app.listen(port); // Start app
+        app.listen(port, () => console.log(`Connected. Running in ${port}`)); // Start app
     })
     .catch((error) => console.log(error));
