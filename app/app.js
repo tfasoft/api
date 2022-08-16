@@ -3,6 +3,7 @@ const express = require('express'); // Require Express
 const cors = require('cors'); // Require CORS
 
 // Import routes
+const ApplicationRoutes = require('./routes/application_routes'); // Import User routes
 const AuthenticationRoutes = require('./routes/authentication_routes'); // Import Authentication routes
 const BlogRoutes = require('./routes/blog_routes'); // Import Blog routes
 const DashboardRoutes = require('./routes/dashboard_routes'); // Import Dashboard routes
@@ -26,6 +27,7 @@ app.use('/api/dashboard', DashboardRoutes); // Use Dashboard routes
 app.use('/api/demo', DemoRoutes); // Use Demo routes
 app.use('/api/mobile', MobileRoutes); // Use Mobile routes
 app.use('/api/user', UserRoutes); // Use User routes
+app.use('*', ApplicationRoutes) // Use Application routes
 
 // Export Express to use in /app.js
 module.exports = app;
