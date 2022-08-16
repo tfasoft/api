@@ -6,11 +6,8 @@ const app = require('./app/app'); // Import app
 require('dotenv').config();
 const env = process.env;
 
-// Add MongoDB URL
-const mdb = `mongodb+srv://${env.MONGO_USERNAME}:${env.MONGO_PASSWORD}@${env.MONGO_DATABASE}.ji4jf.mongodb.net/${env.MONGO_COLLECTION}?retryWrites=true&w=majority`;
-
 // Connect MongoDB
-mongoose.connect(mdb)
+mongoose.connect(env.MONGO_URL)
     .then((connection) => {
         const port = env.PORT; // Use port in .env
 
