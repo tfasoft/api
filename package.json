@@ -2,10 +2,10 @@
   "name": "tfasoft-api",
   "version": "3.0.0",
   "description": "TFASoft API service",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "nodemon app.js"
+    "start": "node server.js",
+    "test": "nodemon server.js"
   },
   "repository": {
     "type": "git",
