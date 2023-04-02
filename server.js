@@ -1,19 +1,12 @@
 // Requires
-const mongoose = require('mongoose'); // Require MongoDB drive
-const app = require('./app/app'); // Import app
 
-// Init ENV
-require('dotenv').config();
-const env = process.env;
+import { appConfig } from "@/config";
+import { mongodb } from "@/connections";
 
-// Connect MongoDB
-mongoose.connect(env.MONGO_URL)
-    .then((connection) => {
-        const port = env.PORT; // Use port in .env
+import app from "./app/index.js";
 
-        app.listen(
-            port, // Listen in port that is detected
-            () => console.log(`Connected. Running in ${port}`), // Print Connected
-        ); // Start app
-    })
-    .catch((error) => console.log(error));
+mongodb.on("open", () => {
+  app.listen(appConfig.port, async () => {
+    console.log(`App is running on ${appConfig.port}`);
+  });
+});
