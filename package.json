@@ -2,10 +2,14 @@
   "name": "tfasoft-api",
   "version": "3.0.0",
   "description": "TFASoft API service",
+  "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "nodemon server.js"
+    "test": "link-module-alias && nodemon server.js",
+    "build": "node_modules/babel-cli/bin/babel.js ./ --source-maps --out-dir dist",
+    "start": "link-module-alias && node server.js",
+    "populate": "node_modules/babel-cli/bin/babel-node.js populate.js",
+    "postinstall": "link-module-alias"
   },
   "repository": {
     "type": "git",
@@ -25,12 +29,18 @@
     "url": "https://github.com/tfasoft/api/issues"
   },
   "homepage": "https://github.com/tfasoft/api#readme",
+  "_moduleAliases": {
+    "@": "app"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "ioredis": "^5.3.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.4.0",
-    "randomstring": "^1.2.2",
+    "rayid": "^2.1.2",
+    "link-module-alias": "^1.2.0",
     "tfa-node-sdk": "^1.6.2"
   }
 }
