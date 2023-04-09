@@ -1,9 +1,14 @@
-import env from "@/env";
+import env from "$app/env/index.js";
 
 export default {
-  mongodb: {
-    host: env.MONGODB_HOST,
-    port: env.MONGODB_PORT,
-    collection: env.MONGODB_COLLECTION,
+  admin: {
+    host: env.MONGO_ADMIN_HOST,
+    port: env.MONGO_ADMIN_PORT,
+    collection: env.MONGO_ADMIN_COLLECTION,
+  },
+  user: {
+    host: env.MONGO_USER_HOST,
+    port: env.MONGO_USER_PORT,
+    collection: env.MONGO_USER_COLLECTION,
   },
 };

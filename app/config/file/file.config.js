@@ -1,4 +1,4 @@
-import env from "@/env";
+import env from "$app/env/index.js";
 
 export default {
   filePath: env.FILE_PATH,
