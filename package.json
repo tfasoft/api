@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/tfasoft/api#readme",
   "_moduleAliases": {
-    "@": "app"
+    "$app": "./app"
   },
   "dependencies": {
     "cors": "^2.8.5",
