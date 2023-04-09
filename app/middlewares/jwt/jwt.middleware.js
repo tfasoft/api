@@ -6,8 +6,8 @@
 
 import JWT from "jsonwebtoken";
 
-import { User } from "@/models";
-import { appConfig } from "@/config";
+import { User } from "$app/models/index.js";
+import { appConfig } from "$app/config/index.js";
 
 const jwt = async (req, res, next) => {
   // ----------------------------------------------

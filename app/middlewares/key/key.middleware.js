@@ -4,7 +4,7 @@
 // API Key Middleware.
 // Check that the request apiKey is valid or not.
 
-import { appConfig } from "@/config";
+import { appConfig } from "$app/config/index.js";
 
 const key = async (req, res, next) => {
   // ----------------------------------------------

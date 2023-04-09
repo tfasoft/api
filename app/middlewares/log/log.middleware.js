@@ -1,4 +1,4 @@
-import { fileConfig } from "@/config";
+import { fileConfig } from "$app/config/index.js";
 
 import fs from "fs";
 
