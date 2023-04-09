@@ -4,7 +4,7 @@
 // Token generator.
 // We use JWT for authorization. To create the token, we use this function.
 
-import { appConfig } from "@/config";
+import { appConfig } from "$app/config/index.js";
 
 import jwt from "jsonwebtoken";
 
