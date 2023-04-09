@@ -1,23 +1,17 @@
 import express from "express";
 import cors from "cors";
 
-import { appConfig } from "@/config";
-import { log } from "@/middlewares";
+import Routes from "$app/routes/index.js";
+import { log } from "$app/middlewares/index.js";
 
 const app = express();
 
-app.set("json spaces", 2);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-app.use("*", log, (req, res) =>
-  res.status(404).send({
-    url: req.originalUrl,
-    method: req.method,
-    message: "Page not found",
-    version: appConfig.version,
-  })
-);
+app.set("json spaces", 2);
+
+app.use("/api", log, Routes);
 
 export default app;
