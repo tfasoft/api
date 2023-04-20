@@ -4,7 +4,8 @@ import { databaseConfig } from "$app/config/index.js";
 
 const { admin } = databaseConfig;
 
-const url = `mongodb://${admin.host}:${admin.port}/${admin.collection}`;
+// const url = `mongodb://${admin.host}:${admin.port}/${admin.collection}`;
+const url = admin.atlas;
 
 const connection = mongoose.createConnection(url, (error) => {
   if (error) {

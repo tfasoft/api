@@ -4,7 +4,8 @@ import { databaseConfig } from "$app/config/index.js";
 
 const { user } = databaseConfig;
 
-const url = `mongodb://${user.host}:${user.port}/${user.collection}`;
+// const url = `mongodb://${user.host}:${user.port}/${user.collection}`;
+const url = user.atlas;
 
 const connection = mongoose.createConnection(url, (error) => {
   if (error) {
