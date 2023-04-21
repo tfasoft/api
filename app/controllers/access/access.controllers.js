@@ -13,6 +13,8 @@ export const ACCESS = async (req, res) => {
       access_token,
     });
 
+    console.log(adminResult.active);
+
     if (!adminResult) {
       res.status(401).send({
         message: "Admin access token is not valid",
@@ -24,6 +26,10 @@ export const ACCESS = async (req, res) => {
             { token: user_token },
             { token: null }
           ).select("-password -__v -createdAt -updatedAt");
+
+          await Admin.findByIdAndUpdate(adminResult._id, {
+            $inc: { creadits: -10 },
+          });
 
           if (!user_result) {
             res.status(401).send({
