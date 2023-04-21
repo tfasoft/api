@@ -13,4 +13,10 @@ export default {
     port: env.MONGO_USER_PORT,
     collection: env.MONGO_USER_COLLECTION,
   },
+  log: {
+    atlas: env.MONGO_LOG_ATLAS,
+    host: env.MONGO_LOG_HOST,
+    port: env.MONGO_LOG_PORT,
+    collection: env.MONGO_LOG_COLLECTION,
+  },
 };
