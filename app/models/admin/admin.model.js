@@ -6,12 +6,6 @@ const { Schema } = mongoose;
 
 const schema = Schema(
   {
-    access_token: {
-      type: String,
-      required: true,
-      unique: true,
-      default: "",
-    },
     name: {
       type: String,
       required: true,
@@ -38,10 +32,10 @@ const schema = Schema(
       required: true,
       default: "",
     },
-    service_type: {
+    companyName: {
       type: String,
       required: true,
-      default: "beta",
+      default: "",
     },
     credits: {
       type: Number,
