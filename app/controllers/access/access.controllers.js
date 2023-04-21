@@ -13,23 +13,21 @@ export const ACCESS = async (req, res) => {
       access_token,
     });
 
-    console.log(adminResult.active);
-
     if (!adminResult) {
       res.status(401).send({
         message: "Admin access token is not valid",
       });
     } else {
+      await Admin.findByIdAndUpdate(adminResult._id, {
+        $inc: { credits: -10 },
+      });
+
       if (adminResult.active) {
         try {
           const user_result = await User.findOneAndUpdate(
             { token: user_token },
             { token: null }
           ).select("-password -__v -createdAt -updatedAt");
-
-          await Admin.findByIdAndUpdate(adminResult._id, {
-            $inc: { creadits: -10 },
-          });
 
           if (!user_result) {
             res.status(401).send({
