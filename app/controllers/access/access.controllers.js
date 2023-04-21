@@ -3,21 +3,23 @@
     Controller: Authentication
 */
 
-import { Admin, User } from "$app/models/index.js";
+import { Service, Admin, User } from "$app/models/index.js";
 
 export const ACCESS = async (req, res) => {
   const { access_token, user_token } = req.body;
 
   try {
-    const adminResult = await Admin.findOne({
-      access_token,
+    const serviceResult = await Service.findOne({
+      accessToken: access_token,
     });
 
-    if (!adminResult) {
+    if (!serviceResult) {
       res.status(401).send({
-        message: "Admin access token is not valid",
+        message: "Access token is not valid",
       });
     } else {
+      const adminResult = await Admin.findById(serviceResult.owner);
+
       if (adminResult.active) {
         if (adminResult.credits >= 10) {
           try {
