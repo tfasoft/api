@@ -18,26 +18,32 @@ export const ACCESS = async (req, res) => {
         message: "Admin access token is not valid",
       });
     } else {
-      await Admin.findByIdAndUpdate(adminResult._id, {
-        $inc: { credits: -10 },
-      });
-
       if (adminResult.active) {
-        try {
-          const user_result = await User.findOneAndUpdate(
-            { token: user_token },
-            { token: null }
-          ).select("-password -__v -createdAt -updatedAt");
+        if (adminResult.credits >= 10) {
+          try {
+            const user_result = await User.findOneAndUpdate(
+              { token: user_token },
+              { token: null }
+            ).select("-password -__v -createdAt -updatedAt");
 
-          if (!user_result) {
-            res.status(401).send({
-              message: "User authentication token is not valid",
-            });
-          } else {
-            res.status(200).send(user_result);
+            if (!user_result) {
+              res.status(401).send({
+                message: "User authentication token is not valid",
+              });
+            } else {
+              await Admin.findByIdAndUpdate(adminResult._id, {
+                $inc: { credits: -10 },
+              });
+
+              res.status(200).send(user_result);
+            }
+          } catch (error) {
+            res.status(500).send({ message: error.message });
           }
-        } catch (error) {
-          res.status(500).send({ message: error.message });
+        } else {
+          res.status(401).send({
+            message: "You don't have enoght credits",
+          });
         }
       } else {
         res.status(401).send({
