@@ -3,7 +3,7 @@
     Controller: Authentication
 */
 
-import { Service, Admin, User } from "$app/models/index.js";
+import { Service, Admin, User, Log } from "$app/models/index.js";
 
 export const ACCESS = async (req, res) => {
   const { access_token, user_token } = req.body;
@@ -23,21 +23,29 @@ export const ACCESS = async (req, res) => {
       if (adminResult.active) {
         if (adminResult.credits >= 10) {
           try {
-            const user_result = await User.findOneAndUpdate(
+            const userResult = await User.findOneAndUpdate(
               { token: user_token },
               { token: null }
             ).select("-password -__v -createdAt -updatedAt");
 
-            if (!user_result) {
+            if (!userResult) {
               res.status(401).send({
                 message: "User authentication token is not valid",
               });
             } else {
+              const data = {
+                user: userResult._id,
+                company: adminResult._id,
+                service: serviceResult._id,
+              };
+
               await Admin.findByIdAndUpdate(adminResult._id, {
                 $inc: { credits: -10 },
               });
 
-              res.status(200).send(user_result);
+              await Log.create(data);
+
+              res.status(200).send(userResult);
             }
           } catch (error) {
             res.status(500).send({ message: error.message });
