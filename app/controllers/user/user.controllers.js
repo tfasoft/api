@@ -26,6 +26,7 @@ export const MY_LOGS = async (req, res) => {
 
   try {
     const logs = await Log.find({ tid: id })
+      .sort({ createdAt: -1 })
       .populate({
         path: "service",
         model: Service,
