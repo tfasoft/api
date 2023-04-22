@@ -38,6 +38,15 @@ export const ACCESS = async (req, res) => {
             } else {
               const url = `https://api.telegram.org/bot${botConfig.token}/sendMessage`;
 
+              const messages = [
+                "New login detected! 🔍\n",
+                `Application: ${serviceResult.name}`,
+                `Provider: ${adminResult.companyName}`,
+                "\n\n",
+                "If you was not that, check your active sessions that is there any other devices loged in to your account or not.\n",
+                "TFAsoft LLC",
+              ];
+
               const data = {
                 user: userResult._id,
                 company: adminResult._id,
@@ -50,16 +59,10 @@ export const ACCESS = async (req, res) => {
 
               await Log.create(data);
 
-              try {
-                const ar = await axios.post(url, {
-                  chat_id: userResult.tid,
-                  text: "hey how are you!?",
-                });
-
-                console.log("Message send", ar);
-              } catch (error) {
-                console.log(error);
-              }
+              await axios.post(url, {
+                chat_id: userResult.tid,
+                text: messages.join("\n"),
+              });
 
               res.status(200).send(userResult);
             }
