@@ -41,8 +41,7 @@ export const ACCESS = async (req, res) => {
               const messages = [
                 "New login detected! 🔍\n",
                 `Application: ${serviceResult.name}`,
-                `Provider: ${adminResult.companyName}`,
-                "\n",
+                `Provider: ${adminResult.companyName}\n`,
                 "If you was not that, check your active sessions that is there any other devices loged in to your account or not.\n",
                 "TFAsoft LLC",
               ];
