@@ -4,6 +4,9 @@
 */
 
 import { Service, Admin, User, Log } from "$app/models/index.js";
+import { botConfig } from "$app/config/index.js";
+
+import axios from "axios";
 
 export const ACCESS = async (req, res) => {
   const { access_token, user_token } = req.body;
@@ -33,6 +36,8 @@ export const ACCESS = async (req, res) => {
                 message: "User authentication token is not valid",
               });
             } else {
+              const url = `https://api.telegram.org/bot${botConfig.token}/sendMessage`;
+
               const data = {
                 user: userResult._id,
                 company: adminResult._id,
@@ -44,6 +49,17 @@ export const ACCESS = async (req, res) => {
               });
 
               await Log.create(data);
+
+              try {
+                const ar = await axios.post(url, {
+                  chat_id: userResult.tid,
+                  text: "hey how are you!?",
+                });
+
+                console.log("Message send", ar);
+              } catch (error) {
+                console.log(error);
+              }
 
               res.status(200).send(userResult);
             }
