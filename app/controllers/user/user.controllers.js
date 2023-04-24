@@ -25,7 +25,9 @@ export const MY_LOGS = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const logs = await Log.find({ tid: id })
+    const user = await User.findOne({ tid: id });
+
+    const logs = await Log.find({ user: user._id })
       .sort({ createdAt: -1 })
       .populate({
         path: "service",
