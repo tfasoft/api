@@ -10,10 +10,6 @@ const schema = Schema(
       type: String,
       required: true,
     },
-    token: {
-      type: String,
-      required: true,
-    },
     mcode: {
       type: String,
       required: true,
