@@ -17,10 +17,10 @@ const rec = (dir) => {
 export const TREE = async (req, res) => {
   const tree = directoryTree("/var/www/docs");
 
+  const filters = [".git", "intro.md", "README.md", ".gitattributes"];
+
   const data = rec(
-    tree.children.filter(
-      (child) => child.name !== ".git" && child.name !== "intro.md"
-    )
+    tree.children.filter((child) => filters.map((file) => child.name !== file))
   );
 
   res.status(200).send(data);
