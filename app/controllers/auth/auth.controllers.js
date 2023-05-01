@@ -1,24 +1,26 @@
 import { User } from "$app/models/index.js";
 import { ray } from "$app/functions/index.js";
+import { redis } from "$app/connections/index.js";
 
 export const LOGIN = async (req, res) => {
   const { tid } = req.body;
 
-  const newToken = ray.gen(25);
+  const token = ray.gen(25);
+
+  const first = token.substring(0, 5);
+  const last = token.substring(token.length - 5);
+
+  const key = first + last;
 
   try {
-    const result = await User.findOneAndUpdate(
-      { tid },
-      {
-        $set: {
-          token: newToken,
-        },
-      }
-    );
+    const result = await User.findOne({ tid });
 
     if (result) {
+      await redis.hset(key, { id: result._id, token });
+      await redis.expire(key, 60);
+
       res.status(200).send({
-        token: newToken,
+        token,
       });
     } else {
       res.status(401).send({

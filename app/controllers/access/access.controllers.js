@@ -3,13 +3,20 @@
     Controller: Authentication
 */
 
+// 0: Service unavailable | 500
+// 1: Provider access token is not valid | 401
+// 2: User access token is not valid | 404
+// 3: Provider doesn't have enoght credits | 403
+// 4: Provider account is not active | 400
+
 import { Service, Admin, User, Log } from "$app/models/index.js";
+import { redis } from "$app/connections/index.js";
 import { botConfig } from "$app/config/index.js";
 
 import axios from "axios";
 
 export const ACCESS = async (req, res) => {
-  const { access_token, user_token } = req.body;
+  const { access_token, user_token: token } = req.body;
 
   try {
     const serviceResult = await Service.findOne({
@@ -18,7 +25,8 @@ export const ACCESS = async (req, res) => {
 
     if (!serviceResult) {
       res.status(401).send({
-        message: "Access token is not valid",
+        resCode: 1,
+        message: "Provider access token is not valid",
       });
     } else {
       const adminResult = await Admin.findById(serviceResult.owner);
@@ -26,14 +34,21 @@ export const ACCESS = async (req, res) => {
       if (adminResult.active) {
         if (adminResult.credits >= 10) {
           try {
-            const userResult = await User.findOneAndUpdate(
-              { token: user_token },
-              { token: null }
-            ).select("-password -__v -createdAt -updatedAt");
+            const first = token.substring(0, 5);
+            const last = token.substring(token.length - 5);
+
+            const key = first + last;
+
+            const { id } = await redis.hgetall(key);
+
+            const userResult = await User.findByIdAndUpdate(id, {
+              token: null,
+            }).select("-password -__v -createdAt -updatedAt");
 
             if (!userResult) {
-              res.status(401).send({
-                message: "User authentication token is not valid",
+              res.status(404).send({
+                resCode: 2,
+                message: "User access token is not valid",
               });
             } else {
               const url = `https://api.telegram.org/bot${botConfig.token}/sendMessage`;
@@ -63,23 +78,35 @@ export const ACCESS = async (req, res) => {
                 text: messages.join("\n"),
               });
 
+              await redis.del(key);
+
               res.status(200).send(userResult);
             }
           } catch (error) {
-            res.status(500).send({ message: error.message });
+            res.status(500).send({
+              resCode: 0,
+              message: "Service unavailable",
+              error: error.message,
+            });
           }
         } else {
-          res.status(401).send({
-            message: "You don't have enoght credits",
+          res.status(403).send({
+            resCode: 3,
+            message: "Provider doesn't have enoght credits",
           });
         }
       } else {
-        res.status(401).send({
-          message: "Admin account is not active",
+        res.status(400).send({
+          resCode: 4,
+          message: "Provider account is not active",
         });
       }
     }
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    res.status(500).send({
+      resCode: 0,
+      message: "Service unavailable",
+      error: error.message,
+    });
   }
 };
