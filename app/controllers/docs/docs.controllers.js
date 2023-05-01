@@ -20,7 +20,7 @@ export const TREE = async (req, res) => {
   const filters = [".git", "intro.md", "README.md", ".gitattributes"];
 
   const data = rec(
-    tree.children.filter((child) => filters.map((file) => child.name !== file))
+    tree.children.filter((child) => !filters.includes(child.name))
   );
 
   res.status(200).send(data);
