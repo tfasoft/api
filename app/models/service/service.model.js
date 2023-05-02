@@ -21,6 +21,14 @@ const schema = Schema(
       required: true,
       default: "",
     },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    ipLimit: {
+      type: String,
+      default: "",
+    },
     owner: {
       type: Schema.Types.ObjectId,
       ref: "Admin",
