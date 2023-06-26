@@ -1,65 +1,77 @@
-import { User } from "$app/models/index.js";
+import { User, Service, Admin, Request } from "$app/models/index.js";
 import { ray } from "$app/functions/index.js";
-import { redis } from "$app/connections/index.js";
+import { request } from "express";
+import axios from "axios";
+// import { redis } from "$app/connections/index.js";
 
-export const LOGIN = async (req, res) => {
-  const { tid } = req.body;
-
-  const token = ray.gen(25);
-
-  const first = token.substring(0, 5);
-  const last = token.substring(token.length - 5);
-
-  const key = first + last;
+export const REQUEST = async (req, res) => {
+  const data = req.body;
 
   try {
-    const result = await User.findOne({ tid });
+    const request = await Request.create(data);
 
-    if (result) {
-      await redis.hset(key, { id: result._id, token });
-      await redis.expire(key, 60);
-
-      res.status(200).send({
-        token,
-      });
-    } else {
-      res.status(401).send({
-        message: "You are not registered.\nPress register button to register.",
-      });
-    }
+    res.status(200).send({
+      trackingCode: request._id,
+      url: `https://t.me/tfasoft_test_bot?start=${request._id}`,
+    });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 };
 
-export const REGISTER = async (req, res) => {
-  const { tid } = req.body;
+export const FETCH = async (req, res) => {
+  const { id } = req.params;
 
   try {
-    const userResult = await User.findOne({ tid });
-
-    if (userResult) {
-      res.status(400).send({
-        message: "You are now a user and don't need a new registration.",
+    const request = await Request.findById(id)
+      .populate({
+        path: "admin",
+        model: Admin,
+        select: "companyName",
+      })
+      .populate({
+        path: "service",
+        model: Service,
+        select: "name",
       });
-    } else {
-      try {
-        const userData = {
-          tid,
-          mcode: ray.gen(25),
-          token: ray.gen(25),
-        };
 
-        await User.create(userData);
-
-        res.status(200).send({ message: "You are now registered!" });
-      } catch (error) {
-        res.status(500).send({
-          message: error.message,
-        });
-      }
+    if (!request) {
+      return res.status(404).send({ message: "Request not found" });
     }
+
+    res.status(200).send(request);
   } catch (error) {
     res.status(500).send({ message: error.message });
+  }
+};
+
+export const VERIFY = async (req, res) => {
+  const { verified, user, request: rid } = req.body;
+
+  try {
+    const request = await Request.findById(rid);
+
+    if (!request) {
+      return res.status(404).send({ message: "Request not found" });
+    }
+
+    const { _id: uid } = await User.findOne({ tid: user });
+
+    try {
+      await Request.findByIdAndUpdate(rid, {
+        $set: { status: verified ? "verified" : "unverified", user: uid },
+      });
+
+      await axios.post(request.callbackUrl, {
+        user,
+        resCode: verified ? 0 : 1,
+      });
+
+      return res.status(200).send({ message: "Ok" });
+    } catch (error) {
+      return res.status(500).send({ message: error.message });
+    }
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
   }
 };

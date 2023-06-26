@@ -9,7 +9,8 @@ import { Auth } from "$app/controllers/index.js";
 
 const router = express.Router();
 
-router.post("/login", Auth.LOGIN);
-router.post("/register", Auth.REGISTER);
+router.post("/request", Auth.REQUEST);
+router.post("/verify", Auth.VERIFY);
+router.get("/:id", Auth.FETCH);
 
 export default router;
